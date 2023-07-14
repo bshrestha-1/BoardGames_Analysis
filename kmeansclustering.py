@@ -5,7 +5,7 @@ from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# Load the data
+# Load the dat
 file_path = 'boardgames.csv'
 df = pd.read_csv(file_path)
 
