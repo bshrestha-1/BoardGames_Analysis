@@ -1,20 +1,4 @@
-import pandas as pd
-from sklearn.model_selection import train_test_split
-from mlxtend.preprocessing import TransactionEncoder
-from mlxtend.frequent_patterns import apriori, association_rules
-from sklearn.preprocessing import StandardScaler
 
-# Load the data
-file_path = 'boardgames.csv'
-df = pd.read_csv(file_path)
-
-# Assume boardgamedesigner and boardgamemechanic are cleaned and ready to use
-df['transactions'] = df.apply(
-    lambda x: [x['boardgamedesigner']] + str(x['boardgamemechanic']).split(', '), axis=1
-)
-
-# Splitting the dataset into training and testing sets
-train_df, test_df = train_test_split(df, test_size=0.2, random_state=42)
 
 # Convert transactions to the format needed for MBA
 def get_transaction_data(data_frame):
