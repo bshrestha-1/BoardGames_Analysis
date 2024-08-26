@@ -1,6 +1,4 @@
-# BoardGames_Analysis
-
-# Board Game Analysis Project
+# Board Game Analysis
 
 ## Overview
 This repository contains an in-depth analysis of board game data scraped from BoardGameGeek.com. The dataset includes attributes of 20,000 board games based on January 13th, 2020. The project encompasses data wrangling (ETL, cleaning, transforming, etc.), exploratory data analysis, and applying several machine learning techniques to derive insights from the board game industry and understand the landscape of board games.
