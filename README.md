@@ -79,3 +79,8 @@ Key findings and visualizations from each analysis are included in the respectiv
 
 ## Acknowledgments
 - BoardGameGeek.com for the original data
+
+I also added spiderplot.py to see the spider plot of the top ten board games. 
+
+[![](ScreenshotAM.png)]
+
