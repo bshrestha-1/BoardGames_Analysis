@@ -4,25 +4,22 @@ from statsmodels.tsa.stattools import adfuller
 from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
 from statsmodels.tsa.arima.model import ARIMA
 
-# Load your dataset
+
 file_path = 'boardgames.csv'
 df = pd.read_csv(file_path)
 
 df = df[df['yearpublished'] > 1600]
 
-# Convert 'yearpublished' to integer, handle NaNs
+# 'yearpublished' to integer, handle NaNs
 df['yearpublished'] = pd.to_numeric(df['yearpublished'], errors='coerce').dropna().astype(int)
 
-# Ensure that all yearpublished entries are within a reasonable range
-df = df[(df['yearpublished'] >= 1000) & (df['yearpublished'] <= 3000)]
-
-# Convert to PeriodIndex directly from integers
+# Converting to PeriodIndex
 df['yearpublished'] = df['yearpublished'].apply(lambda x: pd.Period(year=x, freq='Y'))
 
-# Aggregate data to calculate the average complexity by year
+# Aggregating data to calculate the average complexity by year
 time_series_data = df.groupby('yearpublished')['avgweight'].mean()
 
-# Check stationarity
+# Checking stationarity
 result = adfuller(time_series_data.values)
 print('ADF Statistic:', result[0])
 print('p-value:', result[1])
@@ -46,7 +43,7 @@ plt.show()
 model = ARIMA(time_series_data, order=(1,1,1))  # Adjust p, d, q based on ACF and PACF
 model_fit = model.fit()
 
-# Print out the summary
+# summary
 print(model_fit.summary())
 
 # Forecast
@@ -55,7 +52,7 @@ forecast_index = pd.period_range(start=time_series_data.index[-1], periods=6, fr
 forecast_values = forecast.predicted_mean
 forecast_conf_int = forecast.conf_int()
 
-# Plot the forecast alongside the historical data
+# forecast alongside the historical data
 plt.figure(figsize=(10, 5))
 plt.plot(time_series_data.index.astype(str), time_series_data, label='Historical')
 plt.plot(forecast_index.astype(str), forecast_values, label='Forecast', color='red')
