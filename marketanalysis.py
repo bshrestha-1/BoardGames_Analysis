@@ -4,19 +4,18 @@ from mlxtend.preprocessing import TransactionEncoder
 from mlxtend.frequent_patterns import apriori, association_rules
 from sklearn.preprocessing import StandardScaler
 
-# Load the data
+
 file_path = 'boardgames.csv'
 df = pd.read_csv(file_path)
 
-# Assume boardgamedesigner and boardgamemechanic are cleaned and ready to use
 df['transactions'] = df.apply(
     lambda x: [x['boardgamedesigner']] + str(x['boardgamemechanic']).split(', '), axis=1
 )
 
-# Splitting the dataset into training and testing sets
+# Split
 train_df, test_df = train_test_split(df, test_size=0.2, random_state=42)
 
-# Convert transactions to the format needed for MBA
+# Convert transactions 
 def get_transaction_data(data_frame):
     transactions = data_frame['transactions'].tolist()
     te = TransactionEncoder()
@@ -30,8 +29,8 @@ test_transactions = get_transaction_data(test_df)
 frequent_itemsets_train = apriori(train_transactions, min_support=0.01, use_colnames=True)
 rules_train = association_rules(frequent_itemsets_train, metric="confidence", min_threshold=0.5)
 
-# Evaluating the rules on the test set
-# First, we need to adjust how we evaluate the presence of antecedents:
+# Evaluating the rules 
+
 def match_antecedents(row, rules):
     for antecedents in rules['antecedents']:
         if row[list(antecedents)].all():
